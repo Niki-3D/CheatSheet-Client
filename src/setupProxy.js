@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     "/titles",
     createProxyMiddleware({
-      target: "http://127.0.0.1:5000",
+      target: "https://niki3d.pythonanywhere.com/",
       changeOrigin: true,
     })
   );
