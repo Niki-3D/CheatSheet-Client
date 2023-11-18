@@ -6,7 +6,7 @@ function App() {
   const [selectedTitle, setSelectedTitle] = useState(null);
 
   useEffect(() => {
-    fetch('/titles')
+    fetch('https://niki3d.pythonanywhere.com/titles')
       .then((res) => res.json())
       .then((data) => {
         setTitles(data.titles);
@@ -14,7 +14,7 @@ function App() {
   }, []);
 
   const handleTitleClick = (titleId) => {
-    fetch(`/titles/${titleId}`)
+    fetch(`https://niki3d.pythonanywhere.com/titles/${titleId}`)
       .then((res) => res.json())
       .then((data) => {
         setSelectedTitle(data);
