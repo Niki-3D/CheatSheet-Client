@@ -41,7 +41,25 @@ function App() {
         {selectedTitle ? (
           <div className="selected-title white-box rounded-box">
             <h2>{selectedTitle.title}</h2>
-            <p>{selectedTitle.content}</p>
+            <div className="topic-content">
+              <div>
+                <h3>Information</h3>
+                <p>{selectedTitle.content}</p>
+              </div>
+              <div>
+                <h3>Important Information</h3>
+                <p>{selectedTitle.summary}</p>
+              </div>
+              <div>
+                <h3>Important Terms</h3>
+                {selectedTitle.terms &&
+                  selectedTitle.terms.map((term) => (
+                    <div key={term.id}>
+                      <strong>{term.title}:</strong> {term.definition}
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
         ) : (
           <div className="initial-title white-box rounded-box">
