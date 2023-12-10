@@ -13,12 +13,8 @@ function App() {
       });
   }, []);
 
-  const handleTopicClick = (topicId) => {
-    fetch(`https://niki3d.pythonanywhere.com/topics/${topicId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setSelectedTopic(data);
-      });
+  const handleTopicClick = (topic) => {
+    setSelectedTopic(topic);
   };
 
   return (
@@ -27,7 +23,7 @@ function App() {
         {topics.map((topic) => (
           <div
             key={topic.id}
-            onClick={() => handleTopicClick(topic.id)}
+            onClick={() => handleTopicClick(topic)}
             className={`navbar-item ${
               selectedTopic && selectedTopic.id === topic.id ? "active" : ""
             }`}
