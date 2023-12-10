@@ -2,65 +2,51 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [topics, setTopics] = useState([]);
-  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [titles, setTitles] = useState([]);
+  const [selectedTitle, setSelectedTitle] = useState(null);
 
   useEffect(() => {
-    fetch("https://niki3d.pythonanywhere.com/topics")
+    fetch("https://niki3d.pythonanywhere.com/navbar_titles")
       .then((res) => res.json())
       .then((data) => {
-        setTopics(data.topics);
+        setTitles(data.navbar_titles);
       });
   }, []);
 
-  const handleTopicClick = (topic) => {
-    setSelectedTopic(topic);
+  const handleTitleClick = (titleId) => {
+    fetch(`https://niki3d.pythonanywhere.com/information/${titleId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setSelectedTitle(data);
+      });
   };
 
   return (
     <div>
       <nav className="navbar">
-        {topics.map((topic) => (
+        {titles.map((title) => (
           <div
-            key={topic.id}
-            onClick={() => handleTopicClick(topic)}
+            key={title.id}
+            onClick={() => handleTitleClick(title.id)}
             className={`navbar-item ${
-              selectedTopic && selectedTopic.id === topic.id ? "active" : ""
+              selectedTitle && selectedTitle.id === title.id ? "active" : ""
             }`}
           >
-            {topic.title}
+            {title.title}
           </div>
         ))}
       </nav>
 
-      <div className="topic-container">
-        {selectedTopic ? (
-          <div className="selected-topic white-box rounded-box">
-            <h2>{selectedTopic.title}</h2>
-            <div className="topic-content">
-              <div>
-                <h3>Information</h3>
-                <p>{selectedTopic.info}</p>
-              </div>
-              <div>
-                <h3>Important Information</h3>
-                <p>{selectedTopic.important_info}</p>
-              </div>
-              <div>
-                <h3>Important Terms</h3>
-                {selectedTopic.important_terms &&
-                  selectedTopic.important_terms.map((term) => (
-                    <div key={term.id}>
-                      <strong>{term.title}:</strong> {term.definition}
-                    </div>
-                  ))}
-              </div>
-            </div>
+      <div className="title-container">
+        {selectedTitle ? (
+          <div className="selected-title white-box rounded-box">
+            <h2>{selectedTitle.title}</h2>
+            <p>{selectedTitle.content}</p>
           </div>
         ) : (
-          <div className="initial-topic white-box rounded-box">
-            <h2>Welcome to the Topics Hub</h2>
-            <p>Select a topic from the navbar to explore more.</p>
+          <div className="initial-title white-box rounded-box">
+            <h2>HISTORY</h2>
+            <p>Select a topic from the navbar to learn more.</p>
           </div>
         )}
       </div>
